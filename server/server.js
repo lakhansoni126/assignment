@@ -7,7 +7,12 @@ connectDB();
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+    origin: 'https://assignment-frontend-blush.vercel.app',
+    methods: 'GET,POST',
+    credentials: false
+}));
+
 app.use(express.json());
 
 app.use('/api/v1/orders', orderRoutes);
