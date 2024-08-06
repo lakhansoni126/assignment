@@ -50,7 +50,11 @@ function ChartSection({ data }) {
         },
     };
 
-    return <Line data={chartData} options={options} />;
+    return (
+        <div className="h-96"> {/* Adjust the height using Tailwind CSS */}
+            <Line data={chartData} options={options} />
+        </div>
+    );
 }
 
 export default ChartSection;

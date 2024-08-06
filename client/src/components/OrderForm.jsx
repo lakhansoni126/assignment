@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 const OrderForm = ({ refreshOrders }) => {
-    const [form, setForm] = useState({ buyerQty: '', buyerPrice: '', sellerPrice: '', sellerQty: '' });
+    const [form, setForm] = useState({ qty: '', price: '', type: '' });
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await axios.post('/api/v1/orders/new-order', form);
+        await axios.post('https://assignment-three-roan.vercel.app/api/v1/orders/new-order', form);
         refreshOrders();
     };
 
@@ -15,42 +15,36 @@ const OrderForm = ({ refreshOrders }) => {
             <div>
                 <input
                     type="number"
-                    name="buyerQty"
-                    placeholder="Buyer Quantity"
-                    value={form.buyerQty}
-                    onChange={(e) => setForm({ ...form, buyerQty: e.target.value })}
+                    name="qty"
+                    placeholder="Quantity"
+                    value={form.qty}
+                    onChange={(e) => setForm({ ...form, qty: e.target.value })}
                     className="p-2 border border-gray-600 rounded-md w-full bg-gray-700 text-white"
+                    onWheel={(e) => e.target.blur()}
                 />
             </div>
             <div>
                 <input
                     type="number"
-                    name="buyerPrice"
-                    placeholder="Buyer Price"
-                    value={form.buyerPrice}
-                    onChange={(e) => setForm({ ...form, buyerPrice: e.target.value })}
+                    name="price"
+                    placeholder="Price"
+                    value={form.price}
+                    onChange={(e) => setForm({ ...form, price: e.target.value })}
                     className="p-2 border border-gray-600 rounded-md w-full bg-gray-700 text-white"
+                    onWheel={(e) => e.target.blur()}
                 />
             </div>
             <div>
-                <input
-                    type="number"
-                    name="sellerPrice"
-                    placeholder="Seller Price"
-                    value={form.sellerPrice}
-                    onChange={(e) => setForm({ ...form, sellerPrice: e.target.value })}
+                <select
+                    name="type"
+                    value={form.type}
+                    onChange={(e) => setForm({ ...form, type: e.target.value })}
                     className="p-2 border border-gray-600 rounded-md w-full bg-gray-700 text-white"
-                />
-            </div>
-            <div>
-                <input
-                    type="number"
-                    name="sellerQty"
-                    placeholder="Seller Quantity"
-                    value={form.sellerQty}
-                    onChange={(e) => setForm({ ...form, sellerQty: e.target.value })}
-                    className="p-2 border border-gray-600 rounded-md w-full bg-gray-700 text-white"
-                />
+                >
+                    <option value="" disabled>Select type</option>
+                    <option value="buy">Buy</option>
+                    <option value="sell">Sell</option>
+                </select>
             </div>
             <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded-md">
                 Place Order

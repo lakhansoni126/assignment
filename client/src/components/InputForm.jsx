@@ -13,7 +13,7 @@ function InputForm({ addDataPoint }) {
 
     return (
         <form onSubmit={handleSubmit} className="mt-4">
-            <div className="flex items-center justify-center space-x-2">
+            <div className="flex flex-col items-center space-y-2">
                 <input
                     type="number"
                     placeholder="Enter price"
@@ -21,7 +21,7 @@ function InputForm({ addDataPoint }) {
                     onChange={(e) => setPrice(e.target.value)}
                     className="border rounded px-4 py-2 w-full bg-gray-700 text-white"
                 />
-                <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">
+                <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded w-full">
                     Add Data Point
                 </button>
             </div>

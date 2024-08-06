@@ -1,10 +1,15 @@
 import express from 'express';
+import cors from 'cors';
 import connectDB from './config/db.js';
 import orderRoutes from './routes/orderRoutes.js';
 
 connectDB();
 
 const app = express();
+
+app.use(cors({
+    origin: 'https://assignment-frontend-blush.vercel.app/'
+}));
 app.use(express.json());
 
 app.use('/api/v1/orders', orderRoutes);

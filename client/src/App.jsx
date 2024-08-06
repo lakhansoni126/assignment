@@ -5,7 +5,7 @@ import Chart from './pages/Chart';
 
 const App = () => {
   return (
-    <div className="App container mx-auto p-4 bg-gray-900 text-white">
+    <div className="App h-screen bg-gray-900 text-white">
       <Router>
         <nav className="mb-4 flex justify-center space-x-4">
           <Link to="/" className="text-blue-400 hover:text-blue-600">
@@ -15,7 +15,7 @@ const App = () => {
             Orders
           </Link>
         </nav>
-        <div className="bg-gray-800 p-6 rounded-lg shadow-md">
+        <div className="bg-gray-800 p-6 rounded-lg shadow-md flex-1">
           <Routes>
             <Route path="/" element={<Chart />} />
             <Route path="/MatchingOrder" element={<MatchingOrder />} />
