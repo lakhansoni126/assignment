@@ -9,9 +9,9 @@ const App = () => {
 
   const refreshOrders = async () => {
     try {
-      const pendingRes = await axios.get('/api/orders/pending-orders');
+      const pendingRes = await axios.get('https://assignment-three-roan.vercel.app/api/v1/orders/pending-orders');
       setPendingOrders(pendingRes.data || []);
-      const completedRes = await axios.get('/api/orders/completed-orders');
+      const completedRes = await axios.get('https://assignment-three-roan.vercel.app/api/v1/orders/completed-orders');
       setCompletedOrders(completedRes.data || []);
     } catch (error) {
       console.error("Error fetching orders:", error);
