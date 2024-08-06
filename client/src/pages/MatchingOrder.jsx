@@ -9,8 +9,9 @@ const MatchingOrder = () => {
 
     const refreshOrders = async () => {
         try {
-            const pendingRes = await axios.get('https://assignment-three-roan.vercel.app/api/v1/orders/pending-orders');
+            const pendingRes = await axios.get('https://assignment-three-roan.vercel.app/api/v1/orders/pending-orders',);
             setPendingOrders(pendingRes.data || []);
+
             const completedRes = await axios.get('https://assignment-three-roan.vercel.app/api/v1/orders/completed-orders');
             setCompletedOrders(completedRes.data || []);
         } catch (error) {
@@ -25,7 +26,7 @@ const MatchingOrder = () => {
     }, []);
 
     return (
-        <div className="container w-1/2 mx-auto p-4 bg-gray-900 text-white">
+        <div className="container mx-auto p-4 bg-gray-900 text-white">
             <h1 className="text-3xl font-bold text-center mb-8">Order Matching System</h1>
             <OrderForm refreshOrders={refreshOrders} />
             <OrderTable title="Pending Orders" orders={pendingOrders} />

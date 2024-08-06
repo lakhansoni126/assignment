@@ -8,9 +8,8 @@ connectDB();
 const app = express();
 
 app.use(cors({
-    origin: 'https://assignment-frontend-blush.vercel.app',
+    origin: ['https://assignment-frontend-blush.vercel.app/MatchingOrder', 'https://assignment-frontend-blush.vercel.app/'],
     methods: 'GET,POST',
-    credentials: false
 }));
 
 app.use(express.json());
