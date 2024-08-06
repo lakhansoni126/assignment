@@ -10,9 +10,9 @@ function Chart() {
     };
 
     return (
-        <div className="App container mx-auto p-4">
+        <div className="App container mx-auto p-4 dark:bg-gray-900 dark:text-white">
             <h1 className="text-3xl font-bold mb-6 text-center">Dynamic Chart Application</h1>
-            <div className="bg-white p-6 rounded-lg shadow-md">
+            <div className="bg-gray-800 p-6 rounded-lg shadow-md">
                 <ChartSection data={data} />
                 <InputForm addDataPoint={addDataPoint} />
             </div>

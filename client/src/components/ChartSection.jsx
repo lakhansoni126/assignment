@@ -24,13 +24,28 @@ function ChartSection({ data }) {
                 title: {
                     display: true,
                     text: 'Data Points',
+                    color: '#ffffff'
                 },
+                ticks: {
+                    color: '#ffffff'
+                }
             },
             y: {
                 title: {
                     display: true,
                     text: 'Price',
+                    color: '#ffffff'
                 },
+                ticks: {
+                    color: '#ffffff'
+                }
+            },
+        },
+        plugins: {
+            legend: {
+                labels: {
+                    color: '#ffffff'
+                }
             },
         },
     };

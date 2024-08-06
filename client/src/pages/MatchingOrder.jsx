@@ -25,7 +25,7 @@ const MatchingOrder = () => {
     }, []);
 
     return (
-        <div className="container w-1/2 mx-auto p-4">
+        <div className="container w-1/2 mx-auto p-4 bg-gray-900 text-white">
             <h1 className="text-3xl font-bold text-center mb-8">Order Matching System</h1>
             <OrderForm refreshOrders={refreshOrders} />
             <OrderTable title="Pending Orders" orders={pendingOrders} />
