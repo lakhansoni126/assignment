@@ -1,32 +1,44 @@
-import PendingOrder from '../models/pendingOrder.js';
-import CompletedOrder from '../models/completedOrder.js';
+import CompletedOrder from '../models/completedOrderModel.js';
+import Order from '../models/OrderModel.js';
 import mongoose from 'mongoose';
 
 export const placeOrder = async (req, res) => {
-    const { buyerQty, buyerPrice, sellerPrice, sellerQty } = req.body;
+    const { type, qty, price } = req.body;
+
+    if (!['buy', 'sell'].includes(type)) {
+        return res.status(400).send('Invalid order type');
+    }
 
     const session = await mongoose.startSession();
     session.startTransaction();
 
     try {
-        const match = await PendingOrder.findOne({
-            buyerPrice: sellerPrice,
-            sellerPrice: buyerPrice,
+        const matchType = type === 'buy' ? 'sell' : 'buy';
+
+        // Find a matching order
+        const match = await Order.findOne({
+            type: matchType,
+            price: type === 'buy' ? { $gte: price } : { $lte: price },
+            qty: { $gte: qty },
         }).session(session);
 
         if (match) {
-            await CompletedOrder.create([{ price: sellerPrice, qty: Math.min(buyerQty, sellerQty) }], { session });
-            await PendingOrder.updateOne(
-                { _id: match._id },
-                { $inc: { buyerQty: -buyerQty, sellerQty: -sellerQty } },
-                { session }
-            );
+            // Create a completed order
+            await CompletedOrder.create([{ type: matchType, price: match.price, qty: Math.min(qty, match.qty) }], { session });
 
-            if (match.buyerQty <= 0 || match.sellerQty <= 0) {
-                await PendingOrder.deleteOne({ _id: match._id }, { session });
+            // Update or remove the matching order
+            if (match.qty > qty) {
+                await Order.updateOne(
+                    { _id: match._id },
+                    { $inc: { qty: -qty } },
+                    { session }
+                );
+            } else {
+                await Order.deleteOne({ _id: match._id }, { session });
             }
         } else {
-            await PendingOrder.create([{ buyerQty, buyerPrice, sellerPrice, sellerQty }], { session });
+            // No match found, create a new order
+            await Order.create([{ type, qty, price }], { session });
         }
 
         await session.commitTransaction();
@@ -41,7 +53,7 @@ export const placeOrder = async (req, res) => {
 };
 
 export const getPendingOrders = async (req, res) => {
-    const pendingOrders = await PendingOrder.find();
+    const pendingOrders = await Order.find();
     res.json(pendingOrders);
 };
 
