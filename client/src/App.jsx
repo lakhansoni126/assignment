@@ -1,35 +1,28 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import OrderForm from './components/OrderForm';
-import OrderTable from './components/OrderTable';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes, Link, BrowserRouter } from 'react-router-dom';
+import MatchingOrder from './pages/MatchingOrder';
+import Chart from './pages/Chart';
 
 const App = () => {
-  const [pendingOrders, setPendingOrders] = useState([]);
-  const [completedOrders, setCompletedOrders] = useState([]);
-
-  const refreshOrders = async () => {
-    try {
-      const pendingRes = await axios.get('https://assignment-three-roan.vercel.app/api/v1/orders/pending-orders');
-      setPendingOrders(pendingRes.data || []);
-      const completedRes = await axios.get('https://assignment-three-roan.vercel.app/api/v1/orders/completed-orders');
-      setCompletedOrders(completedRes.data || []);
-    } catch (error) {
-      console.error("Error fetching orders:", error);
-      setPendingOrders([]);
-      setCompletedOrders([]);
-    }
-  };
-
-  useEffect(() => {
-    refreshOrders();
-  }, []);
-
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold text-center mb-8">Order Matching System</h1>
-      <OrderForm refreshOrders={refreshOrders} />
-      <OrderTable title="Pending Orders" orders={pendingOrders} />
-      <OrderTable title="Completed Orders" orders={completedOrders} />
+
+    <div className="App container mx-auto p-4">
+      <BrowserRouter>
+        <nav className="mb-4 flex justify-center space-x-4">
+          <Link to="/" className="text-blue-500 hover:text-blue-700">
+            Charts
+          </Link>
+          <Link to="/MatchingOrder" className="text-blue-500 hover:text-blue-700">
+            Orders
+          </Link>
+        </nav>
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <Routes>
+            <Route path="/" element={<Chart />} />
+            <Route path="/MatchingOrder" element={<MatchingOrder />} />
+          </Routes>
+        </div>
+      </BrowserRouter>
     </div>
   );
 };
