@@ -7,10 +7,7 @@ connectDB();
 
 const app = express();
 
-app.use(cors({
-    origin: ['https://assignment-frontend-blush.vercel.app/MatchingOrder', 'https://assignment-frontend-blush.vercel.app/'],
-    methods: 'GET,POST',
-}));
+app.use(cors());
 
 app.use(express.json());
 
