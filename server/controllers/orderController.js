@@ -15,30 +15,58 @@ export const placeOrder = async (req, res) => {
     try {
         const matchType = type === 'buy' ? 'sell' : 'buy';
 
-        // Find a matching order
-        const match = await Order.findOne({
+        let remainingQty = qty;
+        const ordersToUpdate = [];
+        const ordersToDelete = [];
+
+        const matches = await Order.find({
             type: matchType,
             price: type === 'buy' ? { $gte: price } : { $lte: price },
-            qty: { $gte: qty },
-        }).session(session);
+            qty: { $gte: 1 }
+        }).sort(type === 'buy' ? { price: -1 } : { price: 1 }).session(session);
 
-        if (match) {
-            // Create a completed order
-            await CompletedOrder.create([{ type: matchType, price: match.price, qty: Math.min(qty, match.qty) }], { session });
+        for (const match of matches) {
+            if (remainingQty <= 0) break;
 
-            // Update or remove the matching order
-            if (match.qty > qty) {
-                await Order.updateOne(
-                    { _id: match._id },
-                    { $inc: { qty: -qty } },
-                    { session }
-                );
+            if (match.qty > remainingQty) {
+                ordersToUpdate.push({
+                    _id: match._id,
+                    qty: remainingQty
+                });
+                remainingQty = 0;
             } else {
-                await Order.deleteOne({ _id: match._id }, { session });
+                ordersToUpdate.push({
+                    _id: match._id,
+                    qty: match.qty
+                });
+                remainingQty -= match.qty;
+                ordersToDelete.push(match._id);
             }
-        } else {
-            // No match found, create a new order
-            await Order.create([{ type, qty, price }], { session });
+        }
+
+        const completedOrders = ordersToUpdate.map(order => ({
+            type: matchType,
+            price: price,
+            qty: order.qty
+        }));
+        if (completedOrders.length > 0) {
+            await CompletedOrder.create(completedOrders, { session });
+        }
+
+        for (const order of ordersToUpdate) {
+            await Order.updateOne(
+                { _id: order._id },
+                { $inc: { qty: -order.qty } },
+                { session }
+            );
+        }
+
+        if (ordersToDelete.length > 0) {
+            await Order.deleteMany({ _id: { $in: ordersToDelete } }, { session });
+        }
+
+        if (remainingQty > 0) {
+            await Order.create([{ type, qty: remainingQty, price }], { session });
         }
 
         await session.commitTransaction();
