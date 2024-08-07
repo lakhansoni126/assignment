@@ -14,9 +14,13 @@ const OrderForm = ({ refreshOrders }) => {
         try {
             console.log("Submitting data:", form);
             const response = await axios.post('https://backend-liart-theta.vercel.app/api/v1/orders/new-order', form);
+            setForm({ qty: '', price: '', type: '' });
+            alert('Order executed successfully!');
             refreshOrders();
         } catch (error) {
             console.error("Error submitting form:", error.response?.data || error.message);
+
+            alert('Error executing order. Please try again.');
         }
     };
 
@@ -56,7 +60,9 @@ const OrderForm = ({ refreshOrders }) => {
                         <option value="sell">Sell</option>
                     </select>
                 </div>
-                <button type="submit" className="w-full py-2 px-4 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600">Place Order</button>
+                <button type="submit" className="w-full py-2 px-4 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600">
+                    Place Order
+                </button>
             </form>
         </div>
     );
