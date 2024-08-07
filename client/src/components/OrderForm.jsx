@@ -6,7 +6,7 @@ const OrderForm = ({ refreshOrders }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await axios.post('https://assignment-three-roan.vercel.app/api/v1/orders/new-order', form);
+        await axios.post('https://backend-liart-theta.vercel.app/api/v1/orders/new-order', form);
         refreshOrders();
     };
 
