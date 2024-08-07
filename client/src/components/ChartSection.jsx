@@ -51,8 +51,10 @@ function ChartSection({ data }) {
     };
 
     return (
-        <div className="h-96"> {/* Adjust the height using Tailwind CSS */}
-            <Line data={chartData} options={options} />
+        <div className="h-128 flex justify-end"> {/* Adjust the height and alignment using Tailwind CSS */}
+            <div className="w-full md:w-11/12">
+                <Line data={chartData} options={options} />
+            </div>
         </div>
     );
 }

@@ -13,7 +13,7 @@ function InputForm({ addDataPoint }) {
 
     return (
         <form onSubmit={handleSubmit} className="mt-4">
-            <div className="flex flex-col items-center space-y-2">
+            <div className="flex flex-col items-start space-y-2">
                 <input
                     type="number"
                     placeholder="Enter price"

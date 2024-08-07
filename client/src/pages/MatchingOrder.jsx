@@ -9,7 +9,7 @@ const MatchingOrder = () => {
 
     const refreshOrders = async () => {
         try {
-            const pendingRes = await axios.get('https://backend-liart-theta.vercel.app/api/v1/orders/pending-orders',);
+            const pendingRes = await axios.get('https://backend-liart-theta.vercel.app/api/v1/orders/pending-orders');
             setPendingOrders(pendingRes.data || []);
 
             const completedRes = await axios.get('https://backend-liart-theta.vercel.app/api/v1/orders/completed-orders');
@@ -26,11 +26,17 @@ const MatchingOrder = () => {
     }, []);
 
     return (
-        <div className="container mx-auto p-4 bg-gray-900 text-white">
+        <div className="container mx-auto p-4 bg-gray-900 text-white min-h-screen">
             <h1 className="text-3xl font-bold text-center mb-8">Order Matching System</h1>
-            <OrderForm refreshOrders={refreshOrders} />
-            <OrderTable title="Pending Orders" orders={pendingOrders} />
-            <OrderTable title="Completed Orders" orders={completedOrders} />
+            <div className="flex flex-col md:flex-row justify-center items-start md:space-x-4">
+                <div className="w-full md:w-1/2 mb-4 md:mb-0 flex justify-end">
+                    <OrderForm refreshOrders={refreshOrders} />
+                </div>
+                <div className="w-full md:w-1/2 flex flex-col space-y-4">
+                    <OrderTable title="Pending Orders" orders={pendingOrders} />
+                    <OrderTable title="Completed Orders" orders={completedOrders} />
+                </div>
+            </div>
         </div>
     );
 };

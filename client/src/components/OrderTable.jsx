@@ -6,30 +6,24 @@ const OrderTable = ({ title, orders }) => {
     }
 
     return (
-        <div className="my-8">
-            <h2 className="text-xl font-bold mb-4">{title}</h2>
-            <table className="min-w-full bg-gray-800 border border-gray-700">
-                <thead className="bg-gray-700">
+        <div className="w-full md:w-3/4 bg-gray-800 p-4 rounded-lg shadow-lg">
+            <h2 className="text-2xl font-semibold mb-4 text-center">{title}</h2>
+            <table className="min-w-full bg-gray-800 text-white">
+                <thead>
                     <tr>
-                        {orders.length > 0 && Object.keys(orders[0]).map((key) => (
-                            <th key={key} className="py-2 px-4 border-b border-gray-700 text-white">{key}</th>
-                        ))}
+                        <th className="py-2 px-4 bg-gray-700">Qty</th>
+                        <th className="py-2 px-4 bg-gray-700">Price</th>
+                        <th className="py-2 px-4 bg-gray-700">Type</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {orders.length > 0 ? orders.map((order) => (
-                        <tr key={order._id} className="hover:bg-gray-600">
-                            {Object.values(order).map((value, index) => (
-                                <td key={index} className="py-2 px-4 border-b border-gray-700 text-white">{value}</td>
-                            ))}
+                    {orders.map((order, index) => (
+                        <tr key={index} className="text-center">
+                            <td className="py-2 px-4">{order.qty}</td>
+                            <td className="py-2 px-4">{order.price}</td>
+                            <td className="py-2 px-4">{order.type}</td>
                         </tr>
-                    )) : (
-                        <tr>
-                            <td className="py-2 px-4 border-b border-gray-700 text-center text-white" colSpan={Object.keys(orders[0] || {}).length}>
-                                No orders available
-                            </td>
-                        </tr>
-                    )}
+                    ))}
                 </tbody>
             </table>
         </div>

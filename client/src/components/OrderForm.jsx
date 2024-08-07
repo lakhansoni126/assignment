@@ -11,45 +11,26 @@ const OrderForm = ({ refreshOrders }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="p-4 bg-gray-800 rounded-md shadow-md space-y-4">
-            <div>
-                <input
-                    type="number"
-                    name="qty"
-                    placeholder="Quantity"
-                    value={form.qty}
-                    onChange={(e) => setForm({ ...form, qty: e.target.value })}
-                    className="p-2 border border-gray-600 rounded-md w-full bg-gray-700 text-white"
-                    onWheel={(e) => e.target.blur()}
-                />
-            </div>
-            <div>
-                <input
-                    type="number"
-                    name="price"
-                    placeholder="Price"
-                    value={form.price}
-                    onChange={(e) => setForm({ ...form, price: e.target.value })}
-                    className="p-2 border border-gray-600 rounded-md w-full bg-gray-700 text-white"
-                    onWheel={(e) => e.target.blur()}
-                />
-            </div>
-            <div>
-                <select
-                    name="type"
-                    value={form.type}
-                    onChange={(e) => setForm({ ...form, type: e.target.value })}
-                    className="p-2 border border-gray-600 rounded-md w-full bg-gray-700 text-white"
-                >
-                    <option value="" disabled>Select type</option>
-                    <option value="buy">Buy</option>
-                    <option value="sell">Sell</option>
-                </select>
-            </div>
-            <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded-md">
-                Place Order
-            </button>
-        </form>
+        <div className="w-full md:w-3/4 bg-gray-800 p-4 rounded-lg shadow-lg">
+            <form onSubmit={handleSubmit}>
+                <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-300">Quantity</label>
+                    <input type="number" name="qty" className="w-full mt-1 p-2 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600" />
+                </div>
+                <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-300">Price</label>
+                    <input type="number" name="price" className="w-full mt-1 p-2 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600" />
+                </div>
+                <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-300">Select Type</label>
+                    <select name="type" className="w-full mt-1 p-2 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600">
+                        <option value="buy">Buy</option>
+                        <option value="sell">Sell</option>
+                    </select>
+                </div>
+                <button type="submit" className="w-full py-2 px-4 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600">Place Order</button>
+            </form>
+        </div>
     );
 };
 
