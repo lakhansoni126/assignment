@@ -34,7 +34,7 @@ const MatchingOrder = () => {
                 </div>
                 <div className="w-full md:w-1/2 flex flex-col space-y-4">
                     <OrderTable title="Pending Orders" orders={pendingOrders} />
-                    <OrderTable title="Completed Orders" orders={completedOrders} />
+                    <OrderTable title="Completed Orders" orders={completedOrders} showType={false} />
                 </div>
             </div>
         </div>

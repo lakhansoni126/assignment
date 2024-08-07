@@ -1,6 +1,6 @@
 import React from 'react';
 
-const OrderTable = ({ title, orders }) => {
+const OrderTable = ({ title, orders, showType = true }) => {
     if (!Array.isArray(orders)) {
         return <div className="text-white">No orders available</div>;
     }
@@ -13,7 +13,7 @@ const OrderTable = ({ title, orders }) => {
                     <tr>
                         <th className="py-2 px-4 bg-gray-700">Qty</th>
                         <th className="py-2 px-4 bg-gray-700">Price</th>
-                        <th className="py-2 px-4 bg-gray-700">Type</th>
+                        {showType && <th className="py-2 px-4 bg-gray-700">Type</th>}
                     </tr>
                 </thead>
                 <tbody>
@@ -21,7 +21,7 @@ const OrderTable = ({ title, orders }) => {
                         <tr key={index} className="text-center">
                             <td className="py-2 px-4">{order.qty}</td>
                             <td className="py-2 px-4">{order.price}</td>
-                            <td className="py-2 px-4">{order.type}</td>
+                            {showType && <td className="py-2 px-4">{order.type}</td>}
                         </tr>
                     ))}
                 </tbody>

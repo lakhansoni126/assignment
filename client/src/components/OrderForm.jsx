@@ -14,13 +14,11 @@ const OrderForm = ({ refreshOrders }) => {
         try {
             console.log("Submitting data:", form);
             const response = await axios.post('https://backend-liart-theta.vercel.app/api/v1/orders/new-order', form);
-            console.log("Response:", response.data);
             refreshOrders();
         } catch (error) {
             console.error("Error submitting form:", error.response?.data || error.message);
         }
     };
-
 
     return (
         <div className="w-full md:w-3/4 bg-gray-800 p-4 rounded-lg shadow-lg">
@@ -53,6 +51,7 @@ const OrderForm = ({ refreshOrders }) => {
                         onChange={handleChange}
                         className="w-full mt-1 p-2 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
                     >
+                        <option value="">Select Type</option>
                         <option value="buy">Buy</option>
                         <option value="sell">Sell</option>
                     </select>
