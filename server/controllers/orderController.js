@@ -1,5 +1,5 @@
-import CompletedOrder from '../models/completedOrderModel.js';
-import Order from '../models/OrderModel.js';
+import CompletedOrder from '/server/models/completedOrderModel.js';
+import Order from '/server/models/orderModel.js';
 import mongoose from 'mongoose';
 
 export const placeOrder = async (req, res) => {
