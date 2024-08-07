@@ -10,7 +10,7 @@
     {
       "src": "/api/v1/orders/(.*)",
       "dest": "/server.js",
-      "methods": ["GET", "POST", "OPTIONS"],
+      "methods": ["GET", "POST"],
       "headers": {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET, POST, OPTIONS",

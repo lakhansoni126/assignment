@@ -12,12 +12,15 @@ const OrderForm = ({ refreshOrders }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('https://backend-liart-theta.vercel.app/api/v1/orders/new-order', form);
+            console.log("Submitting data:", form);
+            const response = await axios.post('https://backend-liart-theta.vercel.app/api/v1/orders/new-order', form);
+            console.log("Response:", response.data);
             refreshOrders();
         } catch (error) {
-            console.error("Error submitting form:", error);
+            console.error("Error submitting form:", error.response?.data || error.message);
         }
     };
+
 
     return (
         <div className="w-full md:w-3/4 bg-gray-800 p-4 rounded-lg shadow-lg">
